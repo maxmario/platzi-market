@@ -14,6 +14,7 @@ public class SwaggerConfig {
     
     @Bean
     public Docket api() {
+        // http://localhost:8090/platzi-market/api/swagger-ui.html#/
         return new Docket(DocumentationType.SWAGGER_2)
             .select()
             .apis(RequestHandlerSelectors.basePackage("com.platzi.market.web.controller"))
