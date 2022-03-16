@@ -20,6 +20,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.Authorization;
 
 @RestController
 @RequestMapping("/products")
@@ -29,8 +30,8 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping()
-    @ApiOperation("Get all supermarket products")
     @ApiResponse(code = 200, message = "OK")
+    @ApiOperation(value = "Get all supermarket products", authorizations = {@Authorization(value="JWT")})
     public ResponseEntity<List<Product>> getAll() {
         return new ResponseEntity<>(productService.getAll(),HttpStatus.OK);
     }
@@ -72,7 +73,7 @@ public class ProductController {
             @ApiResponse(code = 404, message = "Product not found")
         }
     )
-    public ResponseEntity delete(@PathVariable("productId") int productId) {
+    public ResponseEntity<HttpStatus> delete(@PathVariable("productId") int productId) {
         if (productService.delete(productId)) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
